@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/slidemenu_frame"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="5dip"
+    android:importantForAccessibility="auto">
+
+    <net.myanmarhub.widget.MMTextView
+        android:id="@+id/MMTextView1"
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:gravity="center"
+        android:text="@string/slidemenu_category_title"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:background="@drawable/ab_solid_parate"
+        android:textColor="@color/slideme_color" />
+
+    <ListView
+        android:id="@+id/slidemenu_categorylist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/slidemenu_chkLoop"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/MMTextView1"
+        android:padding="5dp" >
+    </ListView>
+
+    <TextView
+        android:id="@+id/frag_content_lblText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:gravity="left"
+        android:padding="3dip"
+        android:text="@string/copyright" />
+
+    <CheckBox
+        android:id="@+id/slidemenu_chkLoop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/frag_content_lblText"
+        android:layout_alignParentLeft="true"
+        android:text="@string/setting_loop" />
+
+    <CheckBox
+        android:id="@+id/slidemenu_chkAutoPlay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/frag_content_lblText"
+        android:layout_marginLeft="3dp"
+        android:layout_toRightOf="@+id/slidemenu_chkLoop"
+        android:text="@string/seting_autoplay" />
+
+</RelativeLayout>

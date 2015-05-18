@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/frag_content_mediaWrapper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:background="@drawable/ab_background_textured_parate" >
+
+        <SeekBar
+            android:id="@+id/frag_content_seekbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:progress="0"
+            android:layout_toLeftOf="@+id/frag_content_btnPlay" />
+
+        <ImageButton
+            android:id="@+id/frag_content_btnPlay"
+            android:layout_width="50dip"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/frag_content_ibFontPlus"
+            android:src="@android:drawable/ic_media_play"
+            android:tag="0" />
+
+        <ImageButton
+            android:id="@+id/frag_content_ibFontMinus"
+            android:layout_width="50dip"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/frag_content_ibFontPlus"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:src="@drawable/ic_minus" />
+
+        <ImageButton
+            android:id="@+id/frag_content_ibFontPlus"
+            android:layout_width="50dip"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/frag_content_btnPlay"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/frag_content_ibFontMinus"
+            android:src="@drawable/ic_plus" />
+
+    </RelativeLayout>
+
+    <net.myanmarhub.widget.MMTextView
+        android:id="@+id/frag_content_lblText"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/frag_content_mediaWrapper"
+        android:layout_alignParentLeft="true"
+        android:gravity="left"
+        android:lineSpacingMultiplier="1.5"
+        android:padding="8dp"
+        android:scrollbars="vertical"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+</RelativeLayout>

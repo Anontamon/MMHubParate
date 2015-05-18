@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="copyright">Myanmar Hub © 2013</string>
+    <string name="ab_menu_info">Info</string>
+    <string name="setting_loop">Loop All</string>
+    <string name="seting_autoplay">Auto Play Audio</string>
+    <string name="info">MMHub Parate သည္ ဗုဒၶဘာသာဝင္မ်ားအားလံုးအတြက္ ပရိတ္ႀကီး (၁၁) သုတ္ကို အလြယ္တကူ ရြတ္ဖတ္ နာၾကားေစႏိုင္ရန္ Myanmar Hub မွ အခမဲ႕ ေရးသားပူေဇာ္ေသာ android app ျဖစ္ပါသည္။ iOS App အျဖစ္လည္း ထြက္ရွိႏိုင္ရန္ ေဆာင္ရြက္ေပးမည္ ျဖစ္ပါသည္။ ထိုေၾကာင့္ MMHub Parate ကို မည္သည္႕ အေၾကာင္းႏွင့္မွ် တစ္ဆင့္ အခေၾကးေငြ ယူ၍ ျပန္လည္ ေရာင္းခ်ျခင္း ျဖန္႕ေဝျခင္းတို႕ကို ျပဳလုပ္ျခင္း မျပဳရပါ။ အခေၾကးေငြ ျဖင့္ ေရာင္းခ် ျဖန္႕ေဝျခင္းကို ေတြ႕ရွိပါက \nreport@myanmarhub.net \nသို႕ ဆိုင္လိပ္စာႏွင့္တကြ ဆက္သြယ္ သတင္း ေပးပို႕ႏိုင္ပါသည္။ Android Development ကို ေလ႔လာေနသူမ်ားအေနျဖင့္ MMHub Parate ၏ source code ကို ေလ႕လာလိုပါက Myanmar Hub ၏ facebook (သို႕) gmail community တို႕တြင္ အခမဲ႕ ေတာင္းဆို ရယူႏိုင္ပါသည္။</string>
+    <color name="selection">#75d986</color>
+
+</resources>

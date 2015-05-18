@@ -1,0 +1,166 @@
+1371525810697	Delete element
+1371528333337	Rename resource 'indicator.png'
+1371528357053	Rename resource 'indicator.png'
+1371528378900	Rename resource 'indicator.png'
+1371528430046	Rename field 'sideMenu'
+1371528841062	Rename package 'net.myanmarhub.dao'
+1371528856349	Delete element
+1371530305871	Rename resource 'layout-land'
+1371530319464	Rename resource 'layout_xlarge'
+1371530343982	Copy file
+1371530347049	Copy file
+1371531097630	Change Layout
+1371532460817	Copy file
+1371532552809	Copy file
+1371532869553	Copy file
+1371532873640	Delete element
+1371533265632	Delete elements
+1371533292111	Delete elements
+1371533300861	Delete elements
+1371533325457	Delete elements
+1371533334499	Delete elements
+1371533337842	Delete elements
+1371533344653	Delete elements
+1371533348085	Delete elements
+1371533352109	Delete elements
+1371533373084	Delete element
+1371533381215	Delete elements
+1371533390555	Delete element
+1371534457357	Rename package 'net.myanmarhub.parate.dao'
+1371534461369	Move compilation unit
+1371534718827	Delete element
+1371535084712	Change Layout
+1371535243291	Rename field 'listView1'
+1371535370731	Delete elements
+1371535539986	Change Widget Type
+1371535716070	Extracts string 'null' into R.string.slidemenu_category_title
+1371536640628	Copy file
+1371536644984	Copy file
+1371536908832	Change Widget Type
+1371536934975	Copy file
+1371536937103	Copy file
+1371537210477	Copy file
+1371537217079	Copy file
+1371537799241	Copy file
+1371538388185	Rename field 'main_frame_layout'
+1371538393738	Copy file
+1371538395481	Copy file
+1371538627619	Rename type 'SlideMenuFrame'
+1371538712001	Rename resource 'menu_frame.xml'
+1371538993984	Delete element
+1371539004540	Delete element
+1371539011833	Delete element
+1371539016519	Delete element
+1371539144981	Copy file
+1371539146773	Copy file
+1371539347211	Copy file
+1371539348046	Copy file
+1371539348938	Copy file
+1371539349926	Copy file
+1371539353970	Delete element
+1371539402518	Copy file
+1371539405859	Copy file
+1371539421280	Copy file
+1371539447572	Copy file
+1371539470448	Copy file
+1371539503357	Copy file
+1371539505063	Copy file
+1371539508220	Copy file
+1371539580488	Copy file
+1371539582037	Copy file
+1371539585176	Copy file
+1371539632807	Copy file
+1371539650413	Copy file
+1371539776848	Delete element
+1371546357783	Delete elements
+1371547933514	Delete element
+1371548443340	Rename field 'CONTENT'
+1371548447328	Rename field 'MP3PATH'
+1371548603891	Delete element
+1371548988146	Delete element
+1371549363244	Rename field 'imageView1'
+1371549376490	Rename field 'textView1'
+1371549384647	Change Widget Type
+1371550024759	Rename type 'OnDataLoadFinishListener'
+1371554053236	Copy file
+1371554055411	Copy file
+1371554370395	Copy file
+1371554399608	Copy file
+1371554426145	Copy file
+1371554434856	Copy file
+1371554439520	Copy file
+1371554611064	Copy file
+1371554946245	Copy file
+1371554958912	Copy file
+1371555024321	Copy file
+1371555076287	Copy file
+1371555320324	Copy file
+1371555376924	Rename resource 'values-sw600dp'
+1371555428206	Copy file
+1371555451039	Delete element
+1371555454427	Copy file
+1371555458693	Copy file
+1371555608323	Copy file
+1371555620592	Rename resource 'values-xlarge'
+1371555624017	Copy file
+1371555650967	Delete element
+1371555654335	Copy file
+1371555672450	Rename resource 'values-large'
+1371555683940	Rename resource 'values'
+1371555695489	Rename resource 'layout-sw720dp'
+1371555702830	Rename resource 'layout-xlarge'
+1371555709350	Rename resource 'layout-sw600dp'
+1371555717627	Rename resource 'layout'
+1371555783915	Rename resource 'layout-large'
+1371555870895	Rename resource 'layout-port'
+1371555943209	Copy files
+1371555953882	Copy file
+1371555962284	Copy file
+1371555981711	Copy file
+1371555994164	Copy file
+1371556000776	Copy file
+1371557361479	Copy file
+1371557376687	Copy file
+1371557389572	Copy file
+1371557862749	Copy file
+1371557905008	Delete element
+1371558056012	Remove Container
+1371558146884	Extracts string 'null' into R.string.copyright
+1371558323764	Extracts string 'null' into R.string.ab_menu_info
+1371561598152	Rename resource 'frag_comment.xml'
+1371564302316	Rename field 'imageButton5'
+1371564315947	Rename field 'seekBar1'
+1371564486636	Rename field 'textView1'
+1371564524042	Change Widget Type
+1371564879689	Rename field 'textView1'
+1371566139405	Rename field 'mContent'
+1371566252366	Change Widget Type
+1371566990218	Copy compilation unit
+1371567021839	Copy compilation unit
+1371567027986	Copy compilation unit
+1371567112955	Copy folder
+1371568347860	Extracts string 'null' into R.string.setting_loop
+1371568402765	Extracts string 'null' into R.string.seting_autoplay
+1371568473211	Rename field 'checkBox1'
+1371568488179	Rename field 'checkBox2'
+1371575868000	Delete element
+1371575994986	Delete element
+1371576564724	Delete element
+1371625300950	Rename method 'play'
+1371646959988	Rename type 'OnSoundManageListener'
+1371647005626	Rename field 'mOnSoundManageListener'
+1371647999184	Rename local variable 'state'
+1371648120222	Rename type 'AudioStateListener'
+1371653546975	Copy method
+1371654798841	Rename method 'resume'
+1371654804052	Rename method 'play'
+1371660677400	Rename field 'imageButton1'
+1371660817373	Rename field 'imageButton1'
+1371663020975	Wrap in Container
+1371666729873	Rename field 'imageButton4'
+1371666749001	Rename field 'imageButton3'
+1371666757491	Rename field 'ic_ibTwttier'
+1371666774291	Rename field 'imageButton2'
+1371667340004	Rename field 'ic_ibTwitter'
+1371667348894	Rename field 'ic_ibFb'
+1371668147994	Rename method 'playAudio'

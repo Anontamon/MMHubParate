@@ -1,0 +1,418 @@
+package net.myanmarhub.parate;
+
+import java.util.LinkedList;
+
+import net.myanmarhub.parate.domain.Parate;
+import net.myanmarhub.parate.fragment.ContentFragment;
+import net.myanmarhub.parate.fragment.ContentFragment.OnAudioRequest;
+import net.myanmarhub.parate.fragment.SlideMenuFragment;
+import net.myanmarhub.parate.fragment.SlideMenuFragment.OnDataLoadListener;
+import net.myanmarhub.parate.fragment.SlideMenuFragment.onCategoryClickListener;
+import net.myanmarhub.parate.util.Sound.OnSoundStateListener;
+import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.ServiceConnection;
+import android.content.SharedPreferences;
+import android.media.AudioManager;
+import android.net.Uri;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.IBinder;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.ImageButton;
+import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
+
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.view.Window;
+import com.slidingmenu.lib.SlidingMenu;
+import com.slidingmenu.lib.app.SlidingFragmentActivity;
+
+/**
+ * Copyright information
+ * 
+ * You may modify and reuse any parts of code or the whole project in 
+ * your non-commercial app. However, you may not redistribute under 
+ * Myanmar Hub's name or its alias. The resources used in this project are owned
+ * properties of Myanmar Hub and will not be used to redistribute. Selling this 
+ * source code is strongly prohibited.
+ * 
+ * 
+ * @author Tin Htoo Aung (Myanmar Hub)
+ * 
+ * 
+ */
+public class MainActivity extends SlidingFragmentActivity implements OnDataLoadListener, onCategoryClickListener,
+OnAudioRequest, OnSeekBarChangeListener{
+
+	//A reference to the SlidingMenu object.
+	private SlidingMenu slideMenu;
+	private ContentFragment mContentFragment;
+	private SlideMenuFragment mSlideMenuFragment;
+	private MediaService mediaService;
+	private Parate mCurrentParate;
+	private SharedPreferences prefs;
+	private static LinkedList<Parate> dhammaList;
+	private NotificationBroadcast notiBroadcast;
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+		this.setVolumeControlStream(AudioManager.STREAM_MUSIC);
+
+		prefs = getSharedPreferences("prefs", MODE_PRIVATE);
+		//Inflate the main layout into activity
+		setContentView(R.layout.activity_main);
+
+		//initialise references, prepare sidemenu
+		init(savedInstanceState);
+		if(!MediaService.isRunning)startService(new Intent(this, MediaService.class));
+		notiBroadcast = new NotificationBroadcast();
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getSupportMenuInflater().inflate(R.menu.main, menu);
+		return super.onCreateOptionsMenu(menu);
+	}
+
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		//Save current contentFragment into outState Bundle to reuse.
+		getSupportFragmentManager().putFragment(outState, "mContent", mContentFragment);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			//If the homeUp button is enable and click, the slideme will be toggle.
+			//toggle() method is inherited from SlidingFragmentActivity.
+			toggle();
+			break;
+		case R.id.ab_menu_info:
+			showInfoDialog();
+			break;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+
+	/**
+	 * Initialise reference, configure sidemenu
+	 *  @param savedInstanceState save bundle from onCreate()
+	 */
+	private void init(Bundle savedInstanceState){
+		// Initialise contentFragment by checking if saveInstanceState. If it is null,
+		// we will inflate a new instance. Otherwise, we will get the old reference stored from
+		// saveInstanceState bundle.This is not essential however recommend for performace.
+		if (savedInstanceState != null)
+			mContentFragment = (ContentFragment)getSupportFragmentManager().getFragment(savedInstanceState, "mContent");
+		if (mContentFragment == null)
+			mContentFragment = new ContentFragment();
+
+		//Add ContentFragment to layout
+		getSupportFragmentManager().beginTransaction()
+		.replace(R.id.main_content_frame, mContentFragment)
+		.commit();
+
+		//Initialise SlideMenu Object
+		slideMenu = getSlidingMenu();
+		slideMenu.setBehindOffsetRes(R.dimen.slidemenu_behind_offset);
+		slideMenu.setShadowWidthRes(R.dimen.slidemenu_width_shadow);
+		slideMenu.setShadowDrawable(R.drawable.shadow);
+		slideMenu.setBehindScrollScale(0.25f);
+		slideMenu.setFadeDegree(0.25f);
+
+		// check if the device is a tablet or mobile by finding menu_frame in
+		// this activity's layout file. The layout for this menu has two versions: one
+		// for table(large) screen and one for mobile. The mobile version does not have menu_frame
+		// inside. If below can't find menu frame, that means the device has to be mobile.\
+		if (findViewById(R.id.main_menu_frame) == null) {
+			//Since the device is mobile, we will create a slidemen effect.
+			setBehindContentView(R.layout.slidemenu_frame);
+			getSlidingMenu().setSlidingEnabled(true);
+			getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+			// show home as up so we can toggle
+			getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		} else {
+			//Since the device is tablet, we do not need to create slideme as there will be 
+			//enough space on screen. So we use slidemenu as a normal view by disabling
+			//SlideMenu.setSlidingEnabled(false). We won't be needing HomeUp Button as well
+			View v = new View(this);
+			setBehindContentView(v);
+			getSlidingMenu().setSlidingEnabled(false);
+			getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
+		}
+
+		mSlideMenuFragment = new SlideMenuFragment();
+		// set the Behind View Fragment
+		getSupportFragmentManager()
+		.beginTransaction()
+		.replace(R.id.main_menu_frame, mSlideMenuFragment)
+		.commit();
+
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		if(mSlideMenuFragment != null && !mSlideMenuFragment.isDataLoading()){
+			setSupportProgressBarIndeterminateVisibility(false);
+		}
+
+		//Bind the mediaservice to this activity
+		bindService(new Intent(this, MediaService.class), mConnection,
+				Context.BIND_AUTO_CREATE);
+		
+		//Register receiver for notification. Especially use when the notification is clicked.
+		registerReceiver(notiBroadcast, new IntentFilter("NOTI_AUDIO_STOP"));
+	}
+	
+	@Override
+	protected void onResumeFragments() {
+		super.onResumeFragments();
+		
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		
+		//if slidingMenu is showing, close slidingMenu by calling showContent().
+		//This is necessary for tablet ui.
+		if(getSlidingMenu().isMenuShowing()){
+			getSlidingMenu().showContent();
+		}
+		//Unbind mediaservice from this activity for the sake of power usage.
+		unbindService(mConnection);
+	}
+
+	/**
+	 * Resume the audio
+	 * @param parate parate that is currently showing
+	 */
+	public void resumeAudio(Parate parate){
+		if(mediaService != null){
+			mediaService.resumeAudio(parate);
+		}
+	}
+
+	/**
+	 * Pause the audio
+	 */
+	public void pauseAudio(){
+		if(mediaService != null){
+			mediaService.pauseAudio();
+		}
+	}
+
+	/**
+	 * Call before the parate data is loading
+	 */
+	@Override
+	public void preDataLoad() {
+		setSupportProgressBarIndeterminateVisibility(true);
+	}
+
+
+	/**
+	 * Call when the parate data is loaded
+	 */
+	@Override
+	public void onDataLoadFinish(LinkedList<Parate> data) {
+		dhammaList = data;
+		setSupportProgressBarIndeterminateVisibility(false);
+		setContent(data.get(0));
+		playAudio(data.get(0));
+		
+	}
+
+	/**
+	 * Call when the catefgory Item is clicked
+	 */
+	@Override
+	public void onCategoryClicked(Parate parate, long position) {
+		getSlidingMenu().showContent();
+		mCurrentParate = parate;
+		setContent(parate);
+		resumeAudio(parate);
+		playAudio(parate);
+	}
+	
+	/**
+	 * Play audio
+	 * @param parate parate current parate object to play
+	 */
+	private void playAudio(Parate parate){
+		if(mediaService != null){
+			mediaService.pauseAudio();
+			mediaService.stopAudio();
+			if( prefs.getBoolean("isAutoPlay", true)){
+				mediaService.playAudio(parate);
+				while(true){
+					Parate p = dhammaList.removeFirst();
+					dhammaList.addLast(p);
+					if(p.getName().equals(parate.getName())){
+						return;
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * Set parate object's content in ContentFragemnt by calling this method
+	 * @param parate parate object to use
+	 */
+	private void setContent(Parate parate){
+		mCurrentParate = parate;
+		mContentFragment.setContent(parate);
+		getSupportActionBar().setTitle(parate.getName());
+	}
+
+	private ServiceConnection mConnection = new ServiceConnection() {
+
+		private final Handler mediaUpdater =  new Handler();
+		private final Runnable mediaUpdaterRunnable = new Runnable() {
+			public void run() {
+				if(mediaService.isPlaying()){
+					mContentFragment.updateSeekbar(mediaService.getSeekbarUpdate());
+				}
+				mediaUpdater.postDelayed(this,1000);
+			}
+		};
+		public void onServiceConnected(ComponentName className, IBinder binder) {
+			mediaService = ((MediaService.MyBinder) binder).getService();
+			if(mediaService != null){
+			Parate currentParate = mediaService.getCurrentParate();
+			mContentFragment.manageState(mediaService.isPlaying());
+			if(currentParate != null){
+				setContent(currentParate);
+			}else if(mCurrentParate != null){
+				setContent(mCurrentParate);
+			}
+			mediaService.setOnSoundStateListener(new SoundStateListener());
+			//			mContentFragment.manageState((mediaService.isPlaying())?true:false);
+			mediaUpdater.post(mediaUpdaterRunnable);
+			}
+		}
+
+		public void onServiceDisconnected(ComponentName className) {
+			mediaService = null;
+			mediaUpdater.removeCallbacks(mediaUpdaterRunnable);
+		}
+	};
+
+	@Override
+	public void onAudioRequested(Parate parate) {
+		resumeAudio(parate);
+	}
+
+
+	@Override
+	public void onAudioPause() {
+		pauseAudio();
+	}
+
+	@Override
+	public void onProgressChanged(SeekBar seekBar, int progress,
+			boolean fromUser) {
+		if(fromUser)mediaService.seekChange(seekBar);
+		if(progress == seekBar.getMax() && !fromUser){
+			seekBar.setProgress(0);
+			mediaService.cancelNoti();
+		}
+	}
+
+	@Override
+	public void onStartTrackingTouch(SeekBar seekBar) {}
+
+	@Override
+	public void onStopTrackingTouch(SeekBar seekBar) {}
+
+	private class SoundStateListener implements OnSoundStateListener{
+
+		@Override
+		public void onSoundResume() {
+			mContentFragment.manageState(false);
+		}
+
+		@Override
+		public void onSoundPause() {
+			mContentFragment.manageState(false);
+		}
+
+		@Override
+		public void onSoundStart() {
+			mContentFragment.manageState(true);
+		}
+
+		@Override
+		public void onSoundFinish() {
+			mContentFragment.manageState(false);
+			if(prefs.getBoolean("isLoop", false)){
+				Parate p = dhammaList.removeFirst();
+				mediaService.playAudio(p);
+				dhammaList.addLast(p);
+				setContent(p);
+			}else{
+				mediaService.cancelNoti();
+				mContentFragment.resetSeekbar();
+			}
+		}
+
+		@Override
+		public void onSoundStop() {
+			mContentFragment.resetSeekbar();
+		}
+	}
+
+	private void showInfoDialog(){
+		AlertDialog dialog = new AlertDialog.Builder(MainActivity.this).create();
+		View v = getLayoutInflater().inflate(R.layout.info, null);
+		((ImageButton)v.findViewById(R.id.info_ibGoogle)).setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://plus.google.com/u/0/communities/117061843638659744137"));
+				startActivity(browserIntent);
+			}
+		});
+		((ImageButton)v.findViewById(R.id.info_ibFb)).setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/MyanmarHub"));
+				startActivity(browserIntent);
+			}
+		});
+		((ImageButton)v.findViewById(R.id.info_ibTwitter)).setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://twitter.com/MyanmarHub"));
+				startActivity(browserIntent);
+			}
+		});
+		dialog.setView(v);
+		dialog.setCanceledOnTouchOutside(true);
+		dialog.show();
+	}
+	
+	private class NotificationBroadcast extends BroadcastReceiver{
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			pauseAudio();
+		}
+	}
+	
+
+}

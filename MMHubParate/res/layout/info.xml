@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/ab_background_textured_parate"
+    android:padding="15dp" >
+
+    <ScrollView
+        android:id="@+id/info_scroll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true" >
+
+        <net.myanmarhub.widget.MMTextView
+            android:id="@+id/mMTextView1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autoLink="all"
+            android:lineSpacingMultiplier="1.5"
+            android:text="@string/info" />
+
+    </ScrollView>
+
+    <ImageButton
+        android:id="@+id/imageButton1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/imageView1"
+        android:layout_toRightOf="@+id/info_scroll"
+        android:src="@android:drawable/btn_star" />
+
+    <ImageButton
+        android:id="@+id/info_ibFb"
+        android:layout_width="35dip"
+        android:layout_height="35dip"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/imageView1"
+        android:background="@drawable/icon_bg"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_fb" />
+
+    <ImageButton
+        android:id="@+id/info_ibTwitter"
+        android:layout_width="35dip"
+        android:layout_height="35dip"
+        android:layout_alignTop="@+id/info_ibFb"
+        android:layout_toLeftOf="@+id/info_ibFb"
+        android:background="@drawable/icon_bg"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_tw" />
+
+    <ImageButton
+        android:id="@+id/info_ibGoogle"
+        android:layout_width="35dip"
+        android:layout_height="35dip"
+        android:scaleType="fitCenter"
+        android:layout_alignTop="@+id/info_ibTwitter"
+        android:layout_toLeftOf="@+id/info_ibTwitter"
+        android:background="@drawable/icon_bg"
+        android:src="@drawable/ic_google" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="120dip"
+        android:layout_height="35dip"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/info_scroll"
+        android:src="@drawable/myanmarhub_log" />
+
+</RelativeLayout>

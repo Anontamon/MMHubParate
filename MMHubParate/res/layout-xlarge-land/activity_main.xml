@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:baselineAligned="false"
+    android:orientation="horizontal"
+    android:paddingBottom="3dp"
+    android:paddingLeft="120dp"
+    android:paddingRight="120dp"
+    android:background="@drawable/ab_solid_parate"
+    android:paddingTop="3dp" >
+
+    <FrameLayout
+        android:id="@+id/main_menu_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginRight="3dp"
+        android:background="@drawable/bg"
+        android:layout_weight="1.8" >
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/main_content_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@drawable/bg"
+        android:padding="8dp" >
+
+    </FrameLayout>
+
+</LinearLayout>

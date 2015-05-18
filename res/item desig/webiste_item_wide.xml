@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/FrameLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/list_bg_normal"
+    android:padding="8dp" >
+
+    <ImageView
+        android:id="@+id/website_item_ivIcon"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_sample_ads" />
+
+    <RelativeLayout
+        android:id="@+id/website_item_wrapper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="90dp"
+        android:background="#efe0ecec"
+        android:padding="5dp" >
+
+        <net.myanmarhub.widget.MMTextView
+            android:id="@+id/website_item_lblTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:text="Title"
+            android:textSize="20dip" />
+
+        <net.myanmarhub.widget.MMTextView
+            android:id="@+id/website_item_lblDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/website_item_lblTitle"
+            android:layout_marginTop="5dp"
+            android:text="Description" />
+
+    </RelativeLayout>
+
+</FrameLayout>
